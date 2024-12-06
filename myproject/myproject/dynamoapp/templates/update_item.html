@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Item</title>
+</head>
+<body>
+    <h1>Update Item</h1>
+    <form id="update-form">
+        <label for="item_name">Item Name:</label>
+        <input type="text" id="item_name" name="item_name" required><br><br>
+        <label for="item_description">Item Description:</label>
+        <input type="text" id="item_description" name="item_description" required><br><br>
+        <label for="image_url">Image URL:</label>
+        <input type="text" id="image_url" name="image_url"><br><br>
+        <label for="image_label">Image Label (comma-separated):</label>
+        <input type="text" id="image_label" name="image_label"><br><br>
+        <button type="submit">Update Item</button>
+    </form>
+    <script>
+        const form = document.getElementById("update-form");
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+            const itemName = document.getElementById("item_name").value;
+            const itemDescription = document.getElementById("item_description").value;
+            const imageUrl = document.getElementById("image_url").value;
+            const imageLabel = document.getElementById("image_label").value.split(",");
+
+            fetch(`/update_item/1/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    item_name: itemName,
+                    item_description: itemDescription,
+                    image_url: imageUrl,
+                    image_label: imageLabel,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || data.error))
+            .catch(error => console.error("Error updating item:", error));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Item</title>
+</head>
+<body>
+    <h1>Delete Item</h1>
+    <p>Are you sure you want to delete this item?</p>
+    <button id="delete-button">Delete</button>
+    <script>
+        const button = document.getElementById("delete-button");
+        button.addEventListener("click", () => {
+            fetch(`/delete_item/1/`, {
+                method: "POST",
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || data.error))
+            .catch(error => console.error("Error deleting item:", error));
+        });
+    </script>
+</body>
+</html>

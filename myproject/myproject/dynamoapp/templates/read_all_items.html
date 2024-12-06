@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Items List</title>
+  </head>
+  <body>
+    <h1>Items List</h1>
+
+    {% if items and items|length > 0 %}
+    <ul>
+      {% for item in items %}
+      <li>
+
+        <!-- Update Form -->
+        <form method="POST" action="/update_item/" style="margin-top: 20px">
+          <label for="item_id_{{ item.id }}">Vehicle Id:</label>
+          <input
+            type="text"
+            name="item_id"
+            id="item_id_{{ item.id }}"
+            value="{{ item.id }}"
+            readonly
+          /><br />
+
+          <label for="item_name_{{ item.id }}">Vehicle Name:</label>
+          <input
+            type="text"
+            name="item_name"
+            id="item_name_{{ item.id }}"
+            value="{{ item.item_name }}"
+            required
+          /><br />
+
+          <label for="item_description_{{ item.id }}">Vehicle Description:</label>
+          <input
+            type="text"
+            name="item_description"
+            id="item_description_{{ item.id }}"
+            value="{{ item.item_description }}"
+            required
+          /><br />
+
+          <label for="image_url_{{ item.id }}">Vehicle Image URL:</label>
+          <input
+            type="text"
+            name="image_url"
+            id="image_url_{{ item.id }}"
+            value="{{ item.image_url }}"
+            readonly
+          />
+          <!-- Display the image dynamically -->
+          <img
+            src="{{ item.image_url }}"
+            alt="Image for item {{ item.id }}"
+            style="max-width: 100px; max-height: 100px"
+          /><br />
+
+          <label for="image_label_{{ item.id }}">Vehicles Labels:</label>
+          <input
+            type="text"
+            name="image_label"
+            id="image_label_{{ item.id }}"
+            value="{{ item.image_label }}"
+          /><br />
+
+          <label for="image_created_ts_{{ item.id }}"
+            >Created Timedstamp:</label
+          >
+          <input
+            type="text"
+            id="image_created_ts_{{ item.id }}"
+            value="{{ item.created_ts }}"
+            readonly
+          /><br />
+
+          <label for="image_modified_ts_{{ item.id }}"
+            >Modified Timedstamp:</label
+          >
+          <input
+            type="text"
+            id="image_modified_ts_{{ item.id }}"
+            value="{{ item.modified_ts }}"
+            readonly
+          /><br />
+
+          <button type="submit">Update</button>
+        </form>
+
+        <form method="POST" action="/delete_item/" style="margin-top: 10px">
+            <!-- Item ID (hidden) -->
+            <input
+                type="hidden"
+                name="item_id"
+                id="item_id_{{ item.id }}"
+                value="{{ item.id }}"
+            />
+            <!-- Delete Button -->
+            <button type="submit" name="action" value="delete">Delete</button>
+        </form>
+        <hr />
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No items found.</p>
+    {% endif %}
+  </body>
+</html>
